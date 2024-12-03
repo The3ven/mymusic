@@ -75,7 +75,7 @@ Ensure you have the following installed:
 ---
 
 ## 🔨 Todo
-- Add last play song on startup ( with thumbnail and soname of the song)
+- Add last play song on startup ( with thumbnail and name of the song)
 - Add total count and the current song index
 
 
