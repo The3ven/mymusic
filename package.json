@@ -1,8 +1,8 @@
 {
   "name": "mymusic",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "The Even",
+  "homepage": "https://github.com/The3ven/mymusic",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

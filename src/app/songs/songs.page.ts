@@ -675,6 +675,9 @@ export class SongsPage implements OnInit {
   ngOnInit() {
     this.fullPlayer = document.getElementById("fullPlayer") as HTMLElement;
     this.miniPlayer = document.getElementById("miniPlayer") as HTMLElement;
+    if (this.miniPlayer) {
+      this.miniPlayer.style.bottom = "0px";
+    }
   }
 
 
