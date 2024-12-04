@@ -1,17 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonApp } from '@ionic/angular/standalone';
-// import { IonRouterOutlet } from '@ionic/angular/standalone';
-// import { IonButton } from '@ionic/angular/standalone';
-// import { IonContent } from '@ionic/angular/standalone';
-import { IonRange } from '@ionic/angular';
-// import { IonLabel } from '@ionic/angular/standalone';
-// import { IonListHeader } from '@ionic/angular/standalone';
-// import { IonItem } from '@ionic/angular/standalone';
+import { IonRange,IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
 import { play, playSkipForwardOutline, playSkipBackOutline, pause, close, chevronDownOutline } from 'ionicons/icons';
+import { StorageService } from '../services/storage.service'; // Adjust the path as necessary
+
+
 
 @Component({
   selector: 'app-songs',
@@ -20,366 +16,10 @@ import { play, playSkipForwardOutline, playSkipBackOutline, pause, close, chevro
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule],
 })
+
+
 export class SongsPage implements OnInit {
   @ViewChild("range", { static: false }) range!: IonRange;
-  // Show the splash for two seconds and then automatically hide it:
-
-  // songs = [
-  //   {
-  //     title: "7 rings",
-  //     subtitle: "Ariana Grande",
-  //     img: "/assets/7_rings.jpg",
-  //     path: "/assets/songs/7_rings.mp3"
-  //   },
-  //   {
-  //     title: "10,000 Hours",
-  //     subtitle: "Dan + Shay, Justin Bieber",
-  //     img: "/assets/10000_hours.jpg",
-  //     path: "/assets/songs/10,000_hours.mp3"
-  //   },
-  //   {
-  //     title: "Aaj-Ki-Raat",
-  //     subtitle: "Stree-2",
-  //     img: "/assets/Aaj-Ki-Raat-From-Stree-2.jpg",
-  //     path: "/assets/songs/Aaj-Ki-Raat-From-Stree-2.mp3"
-  //   },
-  //   {
-  //     title: "Aami Tomar Kache",
-  //     subtitle: "Arijit Singh",
-  //     img: "/assets/aami_tomar_kache.jpg",
-  //     path: "/assets/songs/Aami_Tomar_Kache.mp3"
-  //   },
-  //   {
-  //     title: "Aashona",
-  //     subtitle: "Arijit Singh",
-  //     img: "/assets/aashona.jpg",
-  //     path: "/assets/songs/Aashona.mp3"
-  //   },
-  //   {
-  //     title: "Baarish",
-  //     subtitle: "Ash King, Shashaa Tirupati",
-  //     img: "/assets/baarish.jpg",
-  //     path: "/assets/songs/Baarish.mp3"
-  //   },
-  //   {
-  //     title: "Baby",
-  //     subtitle: "Justin Bieber",
-  //     img: "/assets/baby.jpg",
-  //     path: "/assets/songs/Baby.mp3"
-  //   },
-  //   {
-  //     title: "Back To You",
-  //     subtitle: "Selena Gomez",
-  //     img: "/assets/back_to_you.jpg",
-  //     path: "/assets/songs/Back_To_You.mp3"
-  //   },
-  //   {
-  //     title: "Believer",
-  //     subtitle: "Imagine Dragons",
-  //     img: "/assets/believer.jpg",
-  //     path: "/assets/songs/believer.mp3"
-  //   },
-  //   {
-  //     title: "bloodline",
-  //     subtitle: "Ariana Grande",
-  //     img: "/assets/bloodline.jpg",
-  //     path: "/assets/songs/bloodline.mp3"
-  //   },
-  //   {
-  //     title: "Boba Tunnel",
-  //     subtitle: "Anupam Roy",
-  //     img: "/assets/boba_tunnel.jpg",
-  //     path: "/assets/songs/Boba_Tunnel.mp3"
-  //   },
-  //   {
-  //     title: "Bojhena Shey Bojhena",
-  //     subtitle: "Arijit Singh",
-  //     img: "/assets/bojhena_shey_bojhena.jpg",
-  //     path: "/assets/songs/Bojhena_Shey_Bojhena.mp3"
-  //   },
-  //   {
-  //     title: "Cheap Thrills",
-  //     subtitle: "Sia",
-  //     img: "/assets/cheap_thrills.jpg",
-  //     path: "/assets/songs/Cheap_Thrills.mp3"
-  //   },
-  //   {
-  //     title: "Cruel Summer",
-  //     subtitle: "Taylor Swift",
-  //     img: "/assets/cruel_summer.jpg",
-  //     path: "/assets/songs/Cruel_Summer.mp3"
-  //   },
-  //   {
-  //     title: "Dance Monkey",
-  //     subtitle: "Tones and I",
-  //     img: "/assets/dance_monkey.jpg",
-  //     path: "/assets/songs/Dance_Monkey.mp3"
-  //   },
-  //   {
-  //     title: "Dark Horse",
-  //     subtitle: "Katy Perry",
-  //     img: "/assets/dark_horse.jpg",
-  //     path: "/assets/songs/Dark_Horse.mp3"
-  //   },
-  //   {
-  //     title: "Despacito",
-  //     subtitle: "Luis Fonsi, Daddy Yankee",
-  //     img: "/assets/despacito.jpg",
-  //     path: "/assets/songs/Despacito.mp3"
-  //   },
-  //   {
-  //     title: "Die For You",
-  //     subtitle: "The Weeknd",
-  //     img: "/assets/die_for_you.jpg",
-  //     path: "/assets/songs/Die_For_You.mp3"
-  //   },
-  //   {
-  //     title: "Die With A Smile",
-  //     subtitle: "Lady Gaga",
-  //     img: "/assets/die_with_a_smile.jpg",
-  //     path: "/assets/songs/Die_With_A_Smile.mp3"
-  //   },
-  //   {
-  //     title: "Egiye de | Shudhu Tomari Jonyo",
-  //     subtitle: "Shudhu Tomari Jonyo",
-  //     img: "/assets/egiye_de.jpg",
-  //     path: "/assets/songs/Egiye_de_Shudhu_Tomari_Jonyo.mp3"
-  //   },
-  //   {
-  //     title: "Faded",
-  //     subtitle: "Alan Walker",
-  //     img: "/assets/faded.jpg",
-  //     path: "/assets/songs/Faded.mp3"
-  //   },
-  //   {
-  //     title: "Fairytale",
-  //     subtitle: "Alexander Rybak",
-  //     img: "/assets/fairytale.jpg",
-  //     path: "/assets/songs/Fairytale.mp3"
-  //   },
-  //   {
-  //     title: "FRIENDS",
-  //     subtitle: "Marshmello, Anne-Marie",
-  //     img: "/assets/friends.jpg",
-  //     path: "/assets/songs/FRIENDS.mp3"
-  //   },
-  //   {
-  //     title: "Gangsta",
-  //     subtitle: "Kehlani",
-  //     img: "/assets/gangsta.jpg",
-  //     path: "/assets/songs/Gangsta.mp3"
-  //   },
-  //   {
-  //     title: "Guzarish",
-  //     subtitle: "Javed Bashir",
-  //     img: "/assets/guzarish.jpg",
-  //     path: "/assets/songs/Guzarish.mp3"
-  //   },
-  //   {
-  //     title: "Him & I",
-  //     subtitle: "G-Eazy, Halsey",
-  //     img: "/assets/him_and_i.jpg",
-  //     path: "/assets/songs/Him_&_I.mp3"
-  //   },
-  //   {
-  //     title: "Into You",
-  //     subtitle: "Ariana Grande",
-  //     img: "/assets/into_you.jpg",
-  //     path: "/assets/songs/Into_You.mp3"
-  //   },
-  //   {
-  //     title: "Kaise Mujhe Tum Mil Gayi",
-  //     subtitle: "Atif Aslam",
-  //     img: "/assets/kaise_mujhe_tum_mil_gayi.jpg",
-  //     path: "/assets/songs/Kaise_Mujhe_Tum_Mil_Gayi.mp3"
-  //   },
-  //   {
-  //     title: "Lal Shari Poriya Konna",
-  //     subtitle: "SHOHAG",
-  //     img: "/assets/lal_shari_poriya_konna.jpg",
-  //     path: "/assets/songs/Lal_Shari_Poriya_Konna.mp3"
-  //   },
-  //   {
-  //     title: "Let Me Love You",
-  //     subtitle: "Mario",
-  //     img: "/assets/let_me_love_you.jpg",
-  //     path: "/assets/songs/Let_Me_Love_You.mp3"
-  //   },
-  //   {
-  //     title: "Love Me Like You Do",
-  //     subtitle: "Ellie Goulding",
-  //     img: "/assets/love_me_like_you_do.jpg",
-  //     path: "/assets/songs/Love_Me_Like_You_Do.mp3"
-  //   },
-  //   {
-  //     title: "Love Story",
-  //     subtitle: "Taylor Swift",
-  //     img: "/assets/love_story.jpg",
-  //     path: "/assets/songs/Love_Story.mp3"
-  //   },
-  //   {
-  //     title: "Lover",
-  //     subtitle: "Taylor Swift",
-  //     img: "/assets/lover.jpg",
-  //     path: "/assets/songs/Lover.mp3"
-  //   },
-  //   {
-  //     title: "Mahiya",
-  //     subtitle: "Awarapan",
-  //     img: "/assets/mahiya.jpg",
-  //     path: "/assets/songs/Mahiya.mp3"
-  //   },
-  //   {
-  //     title: "Main Agar Kahoon",
-  //     subtitle: "Sonu Nigam, Preity Zinta",
-  //     img: "/assets/main_agar_kahoon.jpg",
-  //     path: "/assets/songs/Main_Agar_Kahoon.mp3"
-  //   },
-  //   {
-  //     title: "Maula Mere Maula",
-  //     subtitle: "Roop Kumar Rathod",
-  //     img: "/assets/maula_mere_maula.jpg",
-  //     path: "/assets/songs/Maula_Mere_Maula.mp3"
-  //   },
-  //   {
-  //     title: "MONTA RE",
-  //     subtitle: "T-Series",
-  //     img: "/assets/monta_re.jpg",
-  //     path: "/assets/songs/MONTA_RE.mp3"
-  //   },
-  //   {
-  //     title: "Muskurane",
-  //     subtitle: "Citylights",
-  //     img: "/assets/muskurane.jpg",
-  //     path: "/assets/songs/Muskurane.mp3"
-  //   },
-  //   {
-  //     title: "never_gonna_give_you_up",
-  //     subtitle: "Rick Astley",
-  //     img: "/assets/never_gonna_give_you_up.jpg",
-  //     path: "/assets/songs/never_gonna_give_you_up.mp3"
-  //   },
-  //   {
-  //     title: "O Re Piya",
-  //     subtitle: "Rahat Fateh Ali Khan",
-  //     img: "/assets/o_re_piya.jpg",
-  //     path: "/assets/songs/O_Re_Piya.mp3"
-  //   },
-  //   {
-  //     title: "Ore Manwa Re",
-  //     subtitle: "T-Series Bangla",
-  //     img: "/assets/ore_manwa_re.jpg",
-  //     path: "/assets/songs/Ore_Manwa_Re.mp3"
-  //   },
-  //   {
-  //     title: "Pal",
-  //     subtitle: "Jalebi",
-  //     img: "/assets/pal.jpg",
-  //     path: "/assets/songs/Pal.mp3"
-  //   },
-  //   {
-  //     title: "Perfect",
-  //     subtitle: "Ed Sheeran",
-  //     img: "/assets/perfect.jpg",
-  //     path: "/assets/songs/Perfect.mp3"
-  //   },
-  //   {
-  //     title: "Saiyaara",
-  //     subtitle: "Mohit Chauhan",
-  //     img: "/assets/saiyaara.jpg",
-  //     path: "/assets/songs/Saiyaara.mp3"
-  //   },
-  //   {
-  //     title: "SANAM RE",
-  //     subtitle: "Arijit Singh",
-  //     img: "/assets/sanam_re.jpg",
-  //     path: "/assets/songs/SANAM_RE.mp3"
-  //   },
-  //   {
-  //     title: "See You Again",
-  //     subtitle: "Wiz Khalifa, Charlie Puth",
-  //     img: "/assets/see_you_again.jpg",
-  //     path: "/assets/songs/See_You_Again.mp3"
-  //   },
-  //   {
-  //     title: "Shameless",
-  //     subtitle: "The Weeknd",
-  //     img: "/assets/shameless.jpg",
-  //     path: "/assets/songs/Shameless.mp3"
-  //   },
-  //   {
-  //     title: "Slut!",
-  //     subtitle: "Demi Lovato",
-  //     img: "/assets/slut.jpg",
-  //     path: "/assets/songs/Slut.mp3"
-  //   },
-  //   {
-  //     title: "Starboy",
-  //     subtitle: "The Weeknd, Daft Punk",
-  //     img: "/assets/starboy.jpg",
-  //     path: "/assets/songs/Starboy.mp3"
-  //   },
-  //   {
-  //     title: "Strawberry & Cigarettes",
-  //     subtitle: "Troye Sivan",
-  //     img: "/assets/strawberry_cigarettes.jpg",
-  //     path: "/assets/songs/Strawberry_&_Cigarettes.mp3"
-  //   },
-  //   {
-  //     title: "Stuck with U",
-  //     subtitle: "Ariana Grande, Justin Bieber",
-  //     img: "/assets/stuck_with_u.jpg",
-  //     path: "/assets/songs/Stuck_with_U.mp3"
-  //   },
-  //   {
-  //     title: "Tomake Chai",
-  //     subtitle: "Gangster",
-  //     img: "/assets/tomake_chai.jpg",
-  //     path: "/assets/songs/Tomake_Chai.mp3"
-  //   },
-  //   {
-  //     title: "Tujh Mein Rab Dikhta Hai",
-  //     subtitle: "Rab Ne Bana Di Jodi",
-  //     img: "/assets/tujh_mein_rab_dikhta_hai.jpg",
-  //     path: "/assets/songs/Tujh_Mein_Rab_Dikhta_Hai.mp3"
-  //   },
-  //   {
-  //     title: "Unstoppable",
-  //     subtitle: "Sia",
-  //     img: "/assets/unstoppable.jpg",
-  //     path: "/assets/songs/Unstoppable.mp3"
-  //   },
-  //   {
-  //     title: "Until I Found You",
-  //     subtitle: "Stephen Sanchez",
-  //     img: "/assets/until_i_found_you.jpg",
-  //     path: "/assets/songs/Until_I_Found_You.mp3"
-  //   },
-  //   {
-  //     title: "we can't be friends",
-  //     subtitle: "Unknown Artist",
-  //     img: "/assets/we_cant_be_friends.jpg",
-  //     path: "/assets/songs/we_cant_be_f riends.mp3"
-  //   },
-  //   {
-  //     title: "We Don't Talk Anymore",
-  //     subtitle: "Charlie Puth, Selena Gomez",
-  //     img: "/assets/we_dont_talk_anymore.jpg",
-  //     path: "/assets/songs/We_Dont_Talk_Anymore.mp3"
-  //   },
-  //   {
-  //     title: "Zara Sa",
-  //     subtitle: "Jannat",
-  //     img: "/assets/zara_sa.jpg",
-  //     path: "/assets/songs/Zara_Sa.mp3"
-  //   },
-  //   {
-  //     title: "Zaroori Tha",
-  //     subtitle: "Rahat Fateh Ali Khan",
-  //     img: "/assets/zaroori_tha.jpg",
-  //     path: "/assets/songs/Zaroori_Tha.mp3"
-  //   }
-  // ]
 
   songs = [
     // BANGLA SONG
@@ -612,8 +252,6 @@ export class SongsPage implements OnInit {
     }
   ]
 
-
-
   // Current Song Details
   currTitle: string;
   currSubtitle: string;
@@ -621,9 +259,11 @@ export class SongsPage implements OnInit {
   currentSecsText: string;
   durationText: string;
 
-
   // progress bar value
   progress: number;
+
+  // current song index
+  currentIdx: number;
 
   // toggle for play/pause button
   isPlaying: boolean;
@@ -651,9 +291,10 @@ export class SongsPage implements OnInit {
   fullPlayer!: HTMLElement;
   miniPlayer!: HTMLElement;
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     addIcons({ play, playSkipForwardOutline, playSkipBackOutline, pause, close, chevronDownOutline });
     this.progress = 0;
+    this.currentIdx = 0;
     this.isPlaying = false;
     this.currTitle = "";
     this.currSubtitle = "";
@@ -673,6 +314,18 @@ export class SongsPage implements OnInit {
 
 
   ngOnInit() {
+    this.storageService.getItem('current_song_index').then(async(index)=>{
+      if(!index)
+      {
+        index = 0;
+      }
+      this.currentIdx = index;
+      this.setPlayer();
+    }).catch(async(err)=>{
+      this.currentIdx = 0;
+      this.setPlayer();
+    })
+
     this.fullPlayer = document.getElementById("fullPlayer") as HTMLElement;
     this.miniPlayer = document.getElementById("miniPlayer") as HTMLElement;
     if (this.miniPlayer) {
@@ -680,8 +333,24 @@ export class SongsPage implements OnInit {
     }
   }
 
+  setPlayer()
+  {
+    this.currTitle = this.songs[this.currentIdx].title;
+    this.currSubtitle = this.songs[this.currentIdx].subtitle;
+    this.currImage = this.songs[this.currentIdx].img;
+    this.currSong = new Audio(this.songs[this.currentIdx].path);
 
+    const nextIdx = Number(this.songIndexByName(this.currTitle)) + 1;
+    this.upNextTitle = this.songs[nextIdx].title;
+    this.upNextSubtitle = this.songs[nextIdx].subtitle;
+    this.upNextImg = this.songs[nextIdx].img;
+  }
 
+  saveCurrentSongIndex = async (index:number) =>
+  {    
+    await this.storageService.setItem('current_song_index', index);
+  }
+  
   playSong(title: string, subTitle: string, img: string, song: string) {
     // if a song plays, stop that
     if (this.currSong != null) {
@@ -700,6 +369,17 @@ export class SongsPage implements OnInit {
     this.currSubtitle = subTitle;
     this.currImage = img;
 
+    // set Upcoming song by current song index
+
+    var index = this.songIndexByName(this.currTitle);//this.songs.findIndex(x => x.title == this.currTitle);
+
+    if(this.currentIdx != index)
+    {
+      this.currentIdx = index;
+      // Set last play song for next App opening
+      this.saveCurrentSongIndex(index);
+    }
+
     // Current Song Audio
     this.currSong = new Audio(song);
 
@@ -709,10 +389,6 @@ export class SongsPage implements OnInit {
       // set max range value
       this.maxRangeValue = Number(this.currSong.duration.toFixed(2).toString().substring(0, 5));
 
-
-      // set Upcoming song by current song index
-
-      var index = this.songs.findIndex(x => x.title == this.currTitle);
 
       if ((index + 1) == this.songs.length) {
         this.upNextImg = this.songs[0].img;
@@ -727,7 +403,11 @@ export class SongsPage implements OnInit {
       }
       this.isPlaying = true;
     })
+    this.addEvent();
+  }
 
+  addEvent()
+  {
     this.currSong.addEventListener("timeupdate", () => {
       // update some infos as song plays on
 
@@ -748,6 +428,8 @@ export class SongsPage implements OnInit {
     })
   }
 
+
+
   sToTime(t: any) {
     return this.padZero(parseInt(String((t / (60)) % 60))) + ":" + this.padZero(parseInt(String((t) % 60)));
   }
@@ -756,25 +438,32 @@ export class SongsPage implements OnInit {
     return (v < 10) ? "0" + v : v;
   }
 
+  songIndexByName(title: string)
+  {
+    return this.songs.findIndex(x => x.title == title);
+  }
+
 
   playNext() {
     // get Current song index
-    var index = this.songs.findIndex(x => x.title == this.currTitle);
+    var index = this.songIndexByName(this.currTitle);//this.songs.findIndex(x => x.title == this.currTitle);
 
     // if current song is last then play first song
+    var nextIndex;
     if ((index + 1) == this.songs.length) {
-      this.playSong(this.songs[0].title, this.songs[0].subtitle, this.songs[0].img, this.songs[0].path);
+      nextIndex = 0;
     }
     // else play next song
     else {
-      var nextIndex = index + 1;
-      this.playSong(this.songs[nextIndex].title, this.songs[nextIndex].subtitle, this.songs[nextIndex].img, this.songs[nextIndex].path);
+      nextIndex = index + 1;
     }
+
+    this.playSong(this.songs[nextIndex].title, this.songs[nextIndex].subtitle, this.songs[nextIndex].img, this.songs[nextIndex].path);
   }
 
   playPrev() {
     // get Current song index
-    var index = this.songs.findIndex(x => x.title == this.currTitle);
+    var index = this.songIndexByName(this.currTitle); //this.songs.findIndex(x => x.title == this.currTitle);
 
     if (index == 0) {
       var lastIndex = this.songs.length - 1;
@@ -825,6 +514,11 @@ export class SongsPage implements OnInit {
   play() {
     this.currSong.play();
     this.isPlaying = true;
+    // Total Song Duration
+    this.durationText = this.sToTime(this.currSong.duration);
+    // set max range value
+    this.maxRangeValue = Number(this.currSong.duration.toFixed(2).toString().substring(0, 5));
+    this.addEvent();
   }
 
   cancel() {
